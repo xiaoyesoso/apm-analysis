@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hcloud.apm.analysis.dao.TransactionMapper">
+  <resultMap id="BaseResultMap" type="com.hcloud.apm.analysis.domain.Transaction">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="modelName" jdbcType="VARCHAR" property="modelName" />
+    <result column="modelParams" jdbcType="VARCHAR" property="modelParams" />
+    <result column="startTime" jdbcType="VARCHAR" property="startTime" />
+    <result column="endTime" jdbcType="VARCHAR" property="endTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="dataSourceid" jdbcType="INTEGER" property="dataSourceid" />
+    <result column="labelSnapshot" jdbcType="VARCHAR" property="labelSnapshot" />
+    <result column="submissionid" jdbcType="VARCHAR" property="submissionid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, modelName, modelParams, startTime, endTime, status, dataSourceid, labelSnapshot, 
+    submissionid
+  </sql>
+  <select id="selectByExample" parameterType="com.hcloud.apm.analysis.domain.TransactionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from transaction
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from transaction
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from transaction
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hcloud.apm.analysis.domain.TransactionExample">
+    delete from transaction
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hcloud.apm.analysis.domain.Transaction">
+    insert into transaction (id, name, modelName, 
+      modelParams, startTime, endTime, 
+      status, dataSourceid, labelSnapshot, 
+      submissionid)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{modelName,jdbcType=VARCHAR}, 
+      #{modelParams,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{dataSourceid,jdbcType=INTEGER}, #{labelSnapshot,jdbcType=VARCHAR}, 
+      #{submissionid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hcloud.apm.analysis.domain.Transaction">
+    insert into transaction
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="modelName != null">
+        modelName,
+      </if>
+      <if test="modelParams != null">
+        modelParams,
+      </if>
+      <if test="startTime != null">
+        startTime,
+      </if>
+      <if test="endTime != null">
+        endTime,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="dataSourceid != null">
+        dataSourceid,
+      </if>
+      <if test="labelSnapshot != null">
+        labelSnapshot,
+      </if>
+      <if test="submissionid != null">
+        submissionid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="modelName != null">
+        #{modelName,jdbcType=VARCHAR},
+      </if>
+      <if test="modelParams != null">
+        #{modelParams,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="dataSourceid != null">
+        #{dataSourceid,jdbcType=INTEGER},
+      </if>
+      <if test="labelSnapshot != null">
+        #{labelSnapshot,jdbcType=VARCHAR},
+      </if>
+      <if test="submissionid != null">
+        #{submissionid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hcloud.apm.analysis.domain.TransactionExample" resultType="java.lang.Long">
+    select count(*) from transaction
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update transaction
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modelName != null">
+        modelName = #{record.modelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modelParams != null">
+        modelParams = #{record.modelParams,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTime != null">
+        startTime = #{record.startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endTime != null">
+        endTime = #{record.endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.dataSourceid != null">
+        dataSourceid = #{record.dataSourceid,jdbcType=INTEGER},
+      </if>
+      <if test="record.labelSnapshot != null">
+        labelSnapshot = #{record.labelSnapshot,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submissionid != null">
+        submissionid = #{record.submissionid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update transaction
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      modelName = #{record.modelName,jdbcType=VARCHAR},
+      modelParams = #{record.modelParams,jdbcType=VARCHAR},
+      startTime = #{record.startTime,jdbcType=VARCHAR},
+      endTime = #{record.endTime,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      dataSourceid = #{record.dataSourceid,jdbcType=INTEGER},
+      labelSnapshot = #{record.labelSnapshot,jdbcType=VARCHAR},
+      submissionid = #{record.submissionid,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hcloud.apm.analysis.domain.Transaction">
+    update transaction
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="modelName != null">
+        modelName = #{modelName,jdbcType=VARCHAR},
+      </if>
+      <if test="modelParams != null">
+        modelParams = #{modelParams,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        startTime = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        endTime = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="dataSourceid != null">
+        dataSourceid = #{dataSourceid,jdbcType=INTEGER},
+      </if>
+      <if test="labelSnapshot != null">
+        labelSnapshot = #{labelSnapshot,jdbcType=VARCHAR},
+      </if>
+      <if test="submissionid != null">
+        submissionid = #{submissionid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hcloud.apm.analysis.domain.Transaction">
+    update transaction
+    set name = #{name,jdbcType=VARCHAR},
+      modelName = #{modelName,jdbcType=VARCHAR},
+      modelParams = #{modelParams,jdbcType=VARCHAR},
+      startTime = #{startTime,jdbcType=VARCHAR},
+      endTime = #{endTime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      dataSourceid = #{dataSourceid,jdbcType=INTEGER},
+      labelSnapshot = #{labelSnapshot,jdbcType=VARCHAR},
+      submissionid = #{submissionid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
